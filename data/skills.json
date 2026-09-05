@@ -1,0 +1,24 @@
+{
+  "engine": "node_graph",
+  "features": [
+    "trigger",
+    "condition",
+    "target",
+    "effect",
+    "state",
+    "duration"
+  ],
+  "examples": {
+    "破军": [
+      "use_sha",
+      "check_target_hp",
+      "remove_cards",
+      "increase_damage"
+    ],
+    "伏骑": [
+      "use_sha",
+      "check_distance",
+      "disable_shan"
+    ]
+  }
+}

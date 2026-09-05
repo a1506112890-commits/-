@@ -1,0 +1,11 @@
+{
+  "modes": [
+    "1v1",
+    "身份模式",
+    "斗地主",
+    "2v2",
+    "单机AI"
+  ],
+  "admin_publish": true,
+  "version_control": true
+}
