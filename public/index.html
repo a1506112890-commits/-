@@ -1,53 +1,81 @@
 
 <!doctype html>
 <html>
+<head>
 <meta charset="utf-8">
-<title>群友杀 v7.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-body{background:#130d09;color:white;font-family:sans-serif;padding:20px}
-button{padding:12px;margin:5px}
-.panel{border:1px solid #555;padding:15px;margin:15px}
+body{background:#160d08;color:white;font-family:sans-serif;padding:20px}
+button{padding:14px;margin:5px;border-radius:8px}
+.card{background:white;color:black}
+.box{border:1px solid #777;padding:15px;margin:10px}
 </style>
+</head>
 <body>
-<h1>群友杀 v7.0</h1>
 
-<div class="panel">
-<h2>游戏大厅</h2>
+<h1>群友杀 v7.1 可玩版</h1>
+
+<div class="box">
 <button onclick="single()">单机AI</button>
-<select id="mode">
-<option>1v1</option>
-<option>身份模式</option>
-<option>斗地主</option>
-<option>2v2</option>
-</select>
-<button onclick="create()">创建房间</button>
-<input id="room" placeholder="房间号">
-<button onclick="join()">加入</button>
+<button onclick="createRoom()">创建房间</button>
+<input id="rid" placeholder="房间号">
+<button onclick="joinRoom()">加入</button>
 </div>
 
-<div class="panel">
-<h2>DIY创作中心</h2>
-<p>武将编辑 / 技能节点 / 测试场 / 发布系统</p>
+<div class="box">
+<h2 id="hero">等待开始</h2>
+<div>你的HP:<span id="myhp">-</span></div>
+<div>AI HP:<span id="aihp">-</span></div>
+</div>
+
+<div class="box">
+<h3>手牌</h3>
+<button class="card" onclick="play('杀')">杀</button>
+<button class="card" onclick="play('桃')">桃</button>
+</div>
+
+<div class="box">
+<h3>DIY中心</h3>
+<button onclick="alert('武将编辑器将在下一版开启')">创建武将</button>
+<button onclick="alert('技能编辑器将在下一版开启')">技能编辑</button>
 </div>
 
 <pre id="log"></pre>
 
 <script>
-let ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host);
-ws.onmessage=e=>log(e.data);
+let ws=new WebSocket((location.protocol==="https:"?"wss://":"ws://")+location.host);
+
+ws.onmessage=e=>{
+ let d=JSON.parse(e.data);
+ if(d.game){
+  myhp.innerText=d.game.you.hp;
+  aihp.innerText=d.game.ai.hp;
+  hero.innerText=d.game.you.hero+" VS "+d.game.ai.hero;
+ }
+ if(d.text||d.id||d.type==="log")
+  log.textContent+=(d.text||("房间:"+d.id))+"\\n";
+};
 
 function single(){
- ws.send(JSON.stringify({type:'single'}));
+ ws.send(JSON.stringify({type:"single"}));
 }
-function create(){
- ws.send(JSON.stringify({type:'create',mode:mode.value,name:'玩家'}));
+
+function play(c){
+ ws.send(JSON.stringify({type:"play",card:c}));
 }
-function join(){
- ws.send(JSON.stringify({type:'join',id:room.value,name:'玩家'}));
+
+function createRoom(){
+ ws.send(JSON.stringify({type:"create"}));
 }
+
+function joinRoom(){
+ ws.send(JSON.stringify({type:"join",id:rid.value}));
+}
+
 function log(t){
- document.getElementById('log').textContent+=t+'\\n';
+ document.getElementById("log").textContent+=t+"\\n";
 }
 </script>
+
 </body>
 </html>

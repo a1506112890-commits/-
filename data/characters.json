@@ -1,18 +1,14 @@
 [
   {
-    "id": "caocao",
     "name": "曹操",
     "hp": 4,
-    "faction": "魏",
     "skills": [
       "奸雄"
     ]
   },
   {
-    "id": "liubei",
     "name": "刘备",
     "hp": 4,
-    "faction": "蜀",
     "skills": [
       "仁德"
     ]

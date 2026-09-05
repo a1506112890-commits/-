@@ -1,18 +1,18 @@
 [
   {
     "name": "奸雄",
-    "trigger": "受到伤害后",
+    "trigger": "受到伤害",
     "effect": "获得伤害牌"
   },
   {
     "name": "伏骑",
-    "trigger": "使用杀时",
-    "condition": "距离=1",
-    "effect": "禁止闪响应"
+    "trigger": "使用杀",
+    "condition": "距离1",
+    "effect": "禁止闪"
   },
   {
     "name": "破军",
-    "trigger": "使用杀指定目标",
-    "effect": "弃置目标牌并改变伤害"
+    "trigger": "使用杀",
+    "effect": "弃置目标牌"
   }
 ]
