@@ -1,6 +1,6 @@
 {
-"name":"qunyousha-v7-1-playable",
-"version":"7.1.0",
+"name":"qunyousha-private-server",
+"version":"1.0.0-alpha2",
 "type":"module",
 "scripts":{"start":"node server.js"},
 "dependencies":{"express":"^5.1.0","ws":"^8.18.0"}

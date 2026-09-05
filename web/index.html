@@ -1,0 +1,12 @@
+<!doctype html><meta charset=utf-8>
+<title>群友杀私服</title>
+<h1>群友杀私服 alpha2</h1>
+<button onclick=createRoom()>创建房间</button>
+<input id=id placeholder=房间号><button onclick=join()>加入</button>
+<pre id=log></pre>
+<script>
+let ws=new WebSocket((location.protocol=='https:'?'wss':'ws')+'://'+location.host);
+ws.onmessage=e=>log.textContent+=e.data+'\n';
+function createRoom(){ws.send(JSON.stringify({type:'create'}))}
+function join(){ws.send(JSON.stringify({type:'join',id:id.value}))}
+</script>

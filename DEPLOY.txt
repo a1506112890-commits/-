@@ -1,0 +1,15 @@
+群友杀私服 v1.0-alpha2
+
+说明：
+- 已整合诗笺版 app 核心资源
+- 包含 character/card/extension/mode/game/lib
+- 当前为服务器接入阶段
+
+部署：
+1. 上传 GitHub
+2. Render Node Service
+3. build: npm install
+4. start: npm start
+
+后续：
+接入无名杀原生 server.js 和完整网页客户端
