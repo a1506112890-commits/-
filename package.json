@@ -1,1 +1,7 @@
-{"name":"qunyousha-v6-8","version":"6.8.0","type":"module","scripts":{"start":"node server.js"},"dependencies":{"express":"^5.1.0","ws":"^8.18.0"}}
+{
+"name":"qunyousha-v7",
+"version":"7.0.0",
+"type":"module",
+"scripts":{"start":"node server.js"},
+"dependencies":{"express":"^5.1.0","ws":"^8.18.0"}
+}

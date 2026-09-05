@@ -1,18 +1,62 @@
+
 import express from 'express';
 import {createServer} from 'http';
 import {WebSocketServer} from 'ws';
-const app=express();const server=createServer(app);
-app.use(express.json());app.use(express.static('public'));
-let rooms={};let skills=[];
+
+const app=express();
+const server=createServer(app);
+app.use(express.json());
+app.use(express.static('public'));
+
+let rooms={};
+
+function code(){
+ return Math.random().toString(36).slice(2,7).toUpperCase();
+}
+
 const wss=new WebSocketServer({server});
-function code(){return Math.random().toString(36).slice(2,7).toUpperCase()}
+
 wss.on('connection',ws=>{
-ws.send(JSON.stringify({type:'ready',version:'6.8'}));
-ws.on('message',m=>{let x=JSON.parse(m);
-if(x.type==='create'){let r=code();rooms[r]={players:[ws],mode:x.mode};ws.send(JSON.stringify({type:'room',room:r}))}
-if(x.type==='skill_test'){ws.send(JSON.stringify({type:'skill_result',text:'技能链执行完成'}))}
-})});
-app.post('/api/admin/skill',(req,res)=>{skills.push(req.body);res.json({ok:true})});
-app.get('/api/admin/skills',(req,res)=>res.json(skills));
-app.get('/api/status',(req,res)=>res.json({ok:true,version:'6.8'}));
-server.listen(process.env.PORT||8080,'0.0.0.0');
+ ws.send(JSON.stringify({type:'welcome',version:'7.0'}));
+
+ ws.on('message',raw=>{
+  const m=JSON.parse(raw);
+
+  if(m.type==='create'){
+   let id=code();
+   rooms[id]={mode:m.mode,players:[m.name]};
+   ws.room=id;
+   ws.send(JSON.stringify({type:'room',id}));
+  }
+
+  if(m.type==='join'){
+   if(rooms[m.id]){
+    rooms[m.id].players.push(m.name);
+    ws.send(JSON.stringify({type:'joined',room:rooms[m.id]}));
+   }
+  }
+
+  if(m.type==='single'){
+   ws.send(JSON.stringify({
+    type:'game',
+    player:{hero:'曹操',hp:4,hand:['杀','闪','桃']},
+    ai:{hero:'刘备',hp:4}
+   }));
+  }
+ });
+});
+
+app.get('/api/status',(req,res)=>res.json({
+ok:true,
+version:'7.0',
+features:[
+'AI',
+'1v1',
+'rooms',
+'DIY characters',
+'skill editor'
+]
+}));
+
+app.listen(process.env.PORT||8080,'0.0.0.0',
+()=>console.log('QunyouSha v7 running'));

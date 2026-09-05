@@ -6,6 +6,9 @@
     "2v2",
     "单机AI"
   ],
-  "admin_publish": true,
-  "version_control": true
+  "adminOnly": [
+    "create_character",
+    "edit_skill",
+    "publish"
+  ]
 }

@@ -1,7 +1,7 @@
 services:
-  - type: web
-    name: diy-wujiang-server
-    env: node
-    plan: free
-    buildCommand: npm install
-    startCommand: npm start
+- type: web
+  name: qunyousha-v7
+  env: node
+  plan: free
+  buildCommand: npm install
+  startCommand: npm start

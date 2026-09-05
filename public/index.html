@@ -1,1 +1,53 @@
-<!doctype html><html><meta charset='utf-8'><body style='background:#15100c;color:white;font-family:sans-serif'><h1>群友杀 v6.8</h1><h2>DIY创作平台</h2><p>武将编辑 / 技能节点 / 测试场 / 联机框架</p><button onclick="test()">测试技能</button><pre id=l></pre><script>function test(){l.innerText='技能链：触发→条件→目标→效果→结算';}</script></body></html>
+
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<title>群友杀 v7.0</title>
+<style>
+body{background:#130d09;color:white;font-family:sans-serif;padding:20px}
+button{padding:12px;margin:5px}
+.panel{border:1px solid #555;padding:15px;margin:15px}
+</style>
+<body>
+<h1>群友杀 v7.0</h1>
+
+<div class="panel">
+<h2>游戏大厅</h2>
+<button onclick="single()">单机AI</button>
+<select id="mode">
+<option>1v1</option>
+<option>身份模式</option>
+<option>斗地主</option>
+<option>2v2</option>
+</select>
+<button onclick="create()">创建房间</button>
+<input id="room" placeholder="房间号">
+<button onclick="join()">加入</button>
+</div>
+
+<div class="panel">
+<h2>DIY创作中心</h2>
+<p>武将编辑 / 技能节点 / 测试场 / 发布系统</p>
+</div>
+
+<pre id="log"></pre>
+
+<script>
+let ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host);
+ws.onmessage=e=>log(e.data);
+
+function single(){
+ ws.send(JSON.stringify({type:'single'}));
+}
+function create(){
+ ws.send(JSON.stringify({type:'create',mode:mode.value,name:'玩家'}));
+}
+function join(){
+ ws.send(JSON.stringify({type:'join',id:room.value,name:'玩家'}));
+}
+function log(t){
+ document.getElementById('log').textContent+=t+'\\n';
+}
+</script>
+</body>
+</html>
