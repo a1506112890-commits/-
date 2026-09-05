@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<body style="background:#17130f;color:white;font-family:sans-serif">
+<h2>DIY 武将杀 v4 云联机</h2>
+<input id="name" placeholder="昵称"><br>
+<button onclick="connect()">连接</button>
+<button onclick="create()">创建房间</button><br>
+<input id="room" placeholder="房间号">
+<button onclick="join()">加入</button>
+<pre id="log"></pre>
+<script>
+let ws;
+function log(x){document.getElementById("log").textContent+=x+"\n";}
+function connect(){
+ ws=new WebSocket(location.origin.replace("http","ws"));
+ ws.onopen=()=>log("连接成功");
+ ws.onmessage=e=>log(e.data);
+}
+function create(){
+ ws.send(JSON.stringify({type:"create",name:name.value}));
+}
+function join(){
+ ws.send(JSON.stringify({type:"join",room:room.value,name:name.value}));
+}
+</script>
+</body>
+</html>
